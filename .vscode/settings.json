@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "*.py": "python",
+        "gimbal_behaviour.h": "c",
+        "cmsis_os.h": "c",
+        "rm_cilent_ui.h": "c",
+        "can_receive.h": "c",
+        "remote_control.h": "c"
+    },
+    "stm32-for-vscode.openOCDPath": "C:\\msys64\\mingw64\\bin\\openocd.EXE",
+    "stm32-for-vscode.makePath": false,
+    "stm32-for-vscode.armToolchainPath": "C:\\msys64\\mingw64\\bin"
+}
