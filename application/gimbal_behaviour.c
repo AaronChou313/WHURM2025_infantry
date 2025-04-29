@@ -74,6 +74,26 @@
     }                                                                                \
   }
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+extern uint8_t KEY_flag;
+extern InputData inputdata; // 上位机发来的自瞄数据
+short yuntai_x;
+short yuntai_y;
+
+// 云台行为状态机
+static gimbal_behaviour_e gimbal_behaviour = GIMBAL_ABSOLUTE_ANGLE;
+// 自瞄开关标志符
+uint8_t autoaim_flag = 1;
+uint32_t pressRightTick = 0;
+
+uint8_t is_target_active = 0;                      // 自瞄是否激活的标志位
+fp32 last_shoot_yaw = 0, last_shoot_pitch = 0; // 保存上次的自瞄数据
+extern __IO uint32_t uwTick;                   // 系统时钟
+uint32_t autoTick = 0;                         // 自瞄计数
+
+extern shoot_control_t shoot_control;
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -145,28 +165,6 @@ static void gimbal_motionless_control(fp32 *yaw, fp32 *pitch, gimbal_control_t *
  * @retval none
  */
 void gimbal_autoaim_control(fp32 *yaw, fp32 *pitch, gimbal_control_t *gimbal_control_set);
-
-
-
-/*-----------------------------------变量声明-----------------------------------*/
-
-extern uint8_t KEY_flag;
-extern InputData inputdata; // 上位机发来的自瞄数据
-short yuntai_x;
-short yuntai_y;
-
-// 云台行为状态机
-static gimbal_behaviour_e gimbal_behaviour = GIMBAL_ABSOLUTE_ANGLE;
-// 自瞄开关标志符
-uint8_t autoaim_flag = 1;
-uint32_t pressRightTick = 0;
-
-uint8_t is_target_active = 0;                      // 自瞄是否激活的标志位
-fp32 last_shoot_yaw = 0, last_shoot_pitch = 0; // 保存上次的自瞄数据
-extern __IO uint32_t uwTick;                   // 系统时钟
-uint32_t autoTick = 0;                         // 自瞄计数
-
-extern shoot_control_t shoot_control;
 
 /*-----------------------------------函数实现-----------------------------------*/
 

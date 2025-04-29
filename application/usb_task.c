@@ -25,15 +25,15 @@
 #include "detect_task.h"
 #include "voltage_task.h"
 
-/*-----------------------------------内部函数声明-----------------------------------*/
-
-static void usb_printf(const char *fmt, ...);
-
 /*-----------------------------------变量声明-----------------------------------*/
 
 static uint8_t usb_buf[256];
 static const char status[2][7] = {"OK", "ERROR!"};
 const error_t *error_list_usb_local;
+
+/*-----------------------------------内部函数声明-----------------------------------*/
+
+static void usb_printf(const char *fmt, ...);
 
 /*-----------------------------------函数实现-----------------------------------*/
 

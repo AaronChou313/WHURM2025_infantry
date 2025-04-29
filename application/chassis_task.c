@@ -47,6 +47,20 @@
 uint32_t chassis_high_water;
 #endif
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+// 底盘运动数据
+chassis_move_t chassis_move;
+
+// 底盘轮胎类型
+chassis_wheel_type_e chassis_wheel = CHASSIS_WHEEL_OMNIDIRECTIONAL;
+
+float test_angle_set;
+
+fp32 vx_set_tem, vy_set_tem, offset_angle;
+
+extern float rotate_speed;
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -110,20 +124,6 @@ static void chassis_vector_to_omnidirectional_wheel_speed(const fp32 vx_set, con
  * @retval none
  */
 static void chassis_control_loop(chassis_move_t *chassis_move_control_loop);
-
-/*-----------------------------------变量声明-----------------------------------*/
-
-// 底盘运动数据
-chassis_move_t chassis_move;
-
-// 底盘轮胎类型
-chassis_wheel_type_e chassis_wheel = CHASSIS_WHEEL_OMNIDIRECTIONAL;
-
-float test_angle_set;
-
-fp32 vx_set_tem, vy_set_tem, offset_angle;
-
-extern float rotate_speed;
 
 /*-----------------------------------函数实现-----------------------------------*/
 
@@ -536,7 +536,7 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop)
   }
 
   // 功率控制
-  chassis_power_control(chassis_move_control_loop);
+//  chassis_power_control(chassis_move_control_loop);
 
   // 赋值电流值
   for (i = 0; i < 4; i++)

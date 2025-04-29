@@ -18,6 +18,14 @@
 #include "detect_task.h"
 #include "cmsis_os.h"
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+error_t error_list[ERROR_LIST_LENGTH + 1];
+
+#if INCLUDE_uxTaskGetStackHighWaterMark
+uint32_t detect_task_stack;
+#endif
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -28,14 +36,6 @@
 static void detect_init(uint32_t time);
 
 extern void OLED_com_reset(void);
-
-/*-----------------------------------变量声明-----------------------------------*/
-
-error_t error_list[ERROR_LIST_LENGTH + 1];
-
-#if INCLUDE_uxTaskGetStackHighWaterMark
-uint32_t detect_task_stack;
-#endif
 
 /*-----------------------------------函数实现-----------------------------------*/
 

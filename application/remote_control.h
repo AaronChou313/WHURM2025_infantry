@@ -80,13 +80,6 @@ typedef __packed struct
 
 } RC_ctrl_t;
 
-// 操作类型枚举
-typedef enum
-{
-  USE_REMOTE_CONTROL,           // 遥控器操作
-  USE_KEYBOARD_AND_MOUSE,       // 键鼠操作
-} control_device_type_e;
-
 /*-----------------------------------外部函数声明-----------------------------------*/
 
 /**

@@ -21,10 +21,6 @@
 #include "CRC8_CRC16.h"
 #include "protocol.h"
 
-/*-----------------------------------内部函数声明-----------------------------------*/
-
-// 空
-
 /*-----------------------------------变量声明-----------------------------------*/
 
 // 裁判系统数据接收头
@@ -52,6 +48,10 @@ ext_bullet_remaining_t bullet_remaining_t;
 ext_rfid_status_t rfid_status;
 
 ext_student_interactive_data_t student_interactive_data_t;
+
+/*-----------------------------------内部函数声明-----------------------------------*/
+
+// 空
 
 /*-----------------------------------函数实现-----------------------------------*/
 
@@ -189,9 +189,3 @@ void get_shoot_heat0_limit_and_heat0(uint16_t *heat0_limit, uint16_t *heat0)
     *heat0_limit = robot_state.shooter_heat0_limit;
     *heat0 = power_heat_data_t.shooter_heat0;
 }
-
-// void get_shoot_heat1_limit_and_heat1(uint16_t *heat1_limit, uint16_t *heat1)
-// {
-//     *heat1_limit = robot_state.shooter_heat1_cooling_limit;
-//     *heat1 = power_heat_data_t.shooter_heat1;
-// }

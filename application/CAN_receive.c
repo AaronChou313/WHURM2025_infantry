@@ -33,10 +33,6 @@
     (ptr)->temperate = (data)[6];                                  \
   }
 
-/*-----------------------------------内部函数声明-----------------------------------*/
-
-// 空
-
 /*-----------------------------------变量声明-----------------------------------*/
 
 extern CAN_HandleTypeDef hcan1;
@@ -58,6 +54,10 @@ static CAN_TxHeaderTypeDef gimbal_tx_message;
 static uint8_t gimbal_can_send_data[8];
 static CAN_TxHeaderTypeDef chassis_tx_message;
 static uint8_t chassis_can_send_data[8];
+
+/*-----------------------------------内部函数声明-----------------------------------*/
+
+// 空
 
 /*-----------------------------------函数实现-----------------------------------*/
 

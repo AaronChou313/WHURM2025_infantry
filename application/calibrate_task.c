@@ -39,6 +39,33 @@
 uint32_t calibrate_task_stack;
 #endif
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+static const RC_ctrl_t *calibrate_RC; // remote control point
+static head_cali_t head_cali;         // head cali data
+static gimbal_cali_t gimbal_cali;     // gimbal cali data
+static imu_cali_t accel_cali;         // accel cali data
+static imu_cali_t gyro_cali;          // gyro cali data
+static imu_cali_t mag_cali;           // mag cali data
+
+static uint8_t flash_write_buf[FLASH_WRITE_BUF_LENGTH];
+
+cali_sensor_t cali_sensor[CALI_LIST_LENGTH];
+
+static const uint8_t cali_name[CALI_LIST_LENGTH][3] = {"HD", "GM", "GYR", "ACC", "MAG"};
+
+// 校准数据地址
+static uint32_t *cali_sensor_buf[CALI_LIST_LENGTH] = {
+    (uint32_t *)&head_cali, (uint32_t *)&gimbal_cali,
+    (uint32_t *)&gyro_cali, (uint32_t *)&accel_cali,
+    (uint32_t *)&mag_cali};
+
+static uint8_t cali_sensor_size[CALI_LIST_LENGTH] = {
+    sizeof(head_cali_t) / 4, sizeof(gimbal_cali_t) / 4,
+    sizeof(imu_cali_t) / 4, sizeof(imu_cali_t) / 4, sizeof(imu_cali_t) / 4};
+
+static uint32_t calibrate_systemTick;
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -86,34 +113,7 @@ static bool_t cali_gyro_hook(uint32_t *cali, bool_t cmd); // gyro device cali fu
  */
 static bool_t cali_gimbal_hook(uint32_t *cali, bool_t cmd); // gimbal device cali function
 
-/*-----------------------------------变量声明-----------------------------------*/
-
-static const RC_ctrl_t *calibrate_RC; // remote control point
-static head_cali_t head_cali;         // head cali data
-static gimbal_cali_t gimbal_cali;     // gimbal cali data
-static imu_cali_t accel_cali;         // accel cali data
-static imu_cali_t gyro_cali;          // gyro cali data
-static imu_cali_t mag_cali;           // mag cali data
-
-static uint8_t flash_write_buf[FLASH_WRITE_BUF_LENGTH];
-
-cali_sensor_t cali_sensor[CALI_LIST_LENGTH];
-
-static const uint8_t cali_name[CALI_LIST_LENGTH][3] = {"HD", "GM", "GYR", "ACC", "MAG"};
-
-// 校准数据地址
-static uint32_t *cali_sensor_buf[CALI_LIST_LENGTH] = {
-    (uint32_t *)&head_cali, (uint32_t *)&gimbal_cali,
-    (uint32_t *)&gyro_cali, (uint32_t *)&accel_cali,
-    (uint32_t *)&mag_cali};
-
-static uint8_t cali_sensor_size[CALI_LIST_LENGTH] = {
-    sizeof(head_cali_t) / 4, sizeof(gimbal_cali_t) / 4,
-    sizeof(imu_cali_t) / 4, sizeof(imu_cali_t) / 4, sizeof(imu_cali_t) / 4};
-
 void *cali_hook_fun[CALI_LIST_LENGTH] = {cali_head_hook, cali_gimbal_hook, cali_gyro_hook, NULL, NULL};
-
-static uint32_t calibrate_systemTick;
 
 /*-----------------------------------函数实现-----------------------------------*/
 

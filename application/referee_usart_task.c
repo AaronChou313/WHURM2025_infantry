@@ -31,29 +31,19 @@
 #include "ui.h"
 #include "usart.h"
 
-/*-----------------------------------内部函数声明-----------------------------------*/
-
-/**
- * @brief 单字节解包
- * @param none
- * @retval none
- */
-static void referee_unpack_fifo_data(void);
-
 /*-----------------------------------变量声明-----------------------------------*/
 
+// 串口6
 extern UART_HandleTypeDef huart6;
-
+// 串口消息接收缓冲区
 uint8_t usart6_buf[2][USART_RX_BUF_LENGTH];
 
+// 裁判系统数据
 fifo_s_t referee_fifo;
+// 裁判系统数据缓冲区
 uint8_t referee_fifo_buf[REFEREE_FIFO_BUF_LENGTH];
+// 裁判系统消息标准结构，用于解包裁判系统消息
 unpack_data_t referee_unpack_obj;
-
-int Char_sizeof = 0;
-char Dr_Char_1[] = {" \nyaw\npit\n"};
-char Dr_Char_2[30] = {0};
-static uint8_t Clien_character[60];
 
 uint32_t ui_fpsTick; // 刷新计数
 uint32_t ui_period = 100;
@@ -104,6 +94,15 @@ extern ext_rfid_status_t rfid_status;
 
 extern int ui_self_id;
 
+/*-----------------------------------内部函数声明-----------------------------------*/
+
+/**
+ * @brief 单字节解包
+ * @param none
+ * @retval none
+ */
+static void referee_unpack_fifo_data(void);
+
 /*-----------------------------------函数实现-----------------------------------*/
 
 void referee_usart_task(void const *argument)
@@ -122,8 +121,6 @@ void referee_usart_task(void const *argument)
   ui_init_default_right_text_stable();
   ui_init_default_left_dynamic();
   ui_init_default_right_dynamic();
-//  ui_init_default_velocity_text_stable();
-//  ui_init_default_velocity_dynamic();
 
   while (1)
   {
@@ -148,8 +145,6 @@ void referee_usart_task(void const *argument)
       ui_initTick_3 = uwTick;
       ui_init_default_aim_cross_stable();
       ui_init_default_camera_scope_stable();
-//      ui_init_default_velocity_text_stable();
-//      ui_init_default_velocity_dynamic();
     }
 
     // 更新动态数据
@@ -256,7 +251,6 @@ void referee_usart_task(void const *argument)
       ui_fpsTick = uwTick;
       ui_update_default_left_dynamic();
       ui_update_default_right_dynamic();
-//      ui_update_default_velocity_dynamic();
     }
   }
 }

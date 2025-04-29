@@ -229,8 +229,8 @@ void data_transition(void)
   Send_Data.output_data.curr_omega = gimbal_control_1.gimbal_yaw_motor.motor_gyro;//0.0000015f;//-0.000006f;      
   Send_Data.output_data.state = 0;              
   Send_Data.output_data.autoaim = 4;            
-	robot_id_to_enemy_color(robot_state.robot_id, &enemy_color);
-  Send_Data.output_data.enemy_color = enemy_color;   
+//	robot_id_to_enemy_color(robot_state.robot_id, &enemy_color);
+  Send_Data.output_data.enemy_color = 1;   
 	
 	uint8_t *data_ptr = (uint8_t *)&Send_Data;//½«Send_Data×÷Îª×Ö½ÚÊý×é
 	uint32_t data_length = sizeof(SEND_DATA)-sizeof(Send_Data.frame_tailer.crc16); // ¼ÆËãCRCµÄ³¤¶È£¬ÅÅ³ýcrc16×Ö¶Î

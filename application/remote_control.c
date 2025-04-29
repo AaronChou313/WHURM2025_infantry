@@ -26,6 +26,16 @@
 // 遥控器出错数据上限
 #define RC_CHANNAL_ERROR_VALUE 700
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+extern UART_HandleTypeDef huart3;
+extern DMA_HandleTypeDef hdma_usart3_rx;
+
+// 遥控器控制变量
+RC_ctrl_t rc_ctrl;
+// 接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
+static uint8_t sbus_rx_buf[2][SBUS_RX_BUF_NUM];
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -42,16 +52,6 @@ static int16_t RC_abs(int16_t value);
  * @retval none
  */
 static void sbus_to_rc(volatile const uint8_t *sbus_buf, RC_ctrl_t *rc_ctrl);
-
-/*-----------------------------------变量声明-----------------------------------*/
-
-extern UART_HandleTypeDef huart3;
-extern DMA_HandleTypeDef hdma_usart3_rx;
-
-// 遥控器控制变量
-RC_ctrl_t rc_ctrl;
-// 接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
-static uint8_t sbus_rx_buf[2][SBUS_RX_BUF_NUM];
 
 /*-----------------------------------函数实现-----------------------------------*/
 

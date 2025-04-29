@@ -22,6 +22,24 @@
 #include "gimbal_behaviour.h"
 #include "referee.h"
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+// 底盘行为模式变量
+chassis_behaviour_e chassis_behaviour_mode = CHASSIS_ZERO_FORCE;
+
+float test_swing_angle;
+
+// 小陀螺标识符，0-关闭，1-顺时针转，2-逆时针转
+uint8_t rotate_flag = 0;
+
+// ctrl键防抖
+uint32_t ctrl_pressed_tick = 0;
+
+// 小陀螺速度
+float rotate_speed = 0;
+extern uint32_t uwTick;
+extern ext_game_robot_state_t robot_state;
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -80,23 +98,6 @@ static void chassis_open_set_control(fp32 *vx_set, fp32 *vy_set, fp32 *wz_set, c
 static void chassis_my_defined_control(fp32 *vx_set, fp32 *vy_set, fp32 *wz_set, chassis_move_t *chassis_move_rc_to_vector, fp32 *gimbal_yaw, fp32 *gimbal_pitch);
 
 void level_to_rotate_speed(chassis_move_t *chassis_move_level, float* rotate_speed, uint8_t robot_level);
-/*-----------------------------------变量声明-----------------------------------*/
-
-// 底盘行为模式变量
-chassis_behaviour_e chassis_behaviour_mode = CHASSIS_ZERO_FORCE;
-
-float test_swing_angle;
-
-// 小陀螺标识符，0-关闭，1-顺时针转，2-逆时针转
-uint8_t rotate_flag = 0;
-
-// ctrl键防抖
-uint32_t ctrl_pressed_tick = 0;
-
-// 小陀螺速度
-float rotate_speed = 0;
-extern uint32_t uwTick;
-extern ext_game_robot_state_t robot_state;
 
 /*-----------------------------------函数实现-----------------------------------*/
 
@@ -123,16 +124,6 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
       // 当右边拨杆拨到上面时，切换为不跟随云台模式
       chassis_behaviour_mode = CHASSIS_NO_FOLLOW_YAW;
     }
-
-  //  if (chassis_move_mode->chassis_RC->key.v & KEY_PRESSED_OFFSET_Z && rotate_speed < MAX_ROTATE_SPEED)
-  //  {
-  //    rotate_speed+=1;
-  //  }
-  //  else if (chassis_move_mode->chassis_RC->key.v & KEY_PRESSED_OFFSET_X && rotate_speed-1 > 0)
-  //  {
-  //    rotate_speed-=1;
-  //  }
-
 
   // 当云台在某些模式下（如初始化模式），底盘不动
   // if (gimbal_cmd_to_chassis_stop())
@@ -347,16 +338,6 @@ static void chassis_no_follow_yaw_control(fp32 *vx_set, fp32 *vy_set, fp32 *wz_s
 			else{
 				rotate_flag=1;
 			}
-
-			// if(rotate_flag==0){
-			// 	rotate_flag=1;
-			// }
-			// else if (rotate_flag==1){
-			// 	rotate_flag=2;
-			// }
-			// else if(rotate_flag==2){
-			// 	rotate_flag=0;
-			// }
 		}
   }
 
@@ -364,10 +345,6 @@ static void chassis_no_follow_yaw_control(fp32 *vx_set, fp32 *vy_set, fp32 *wz_s
   {
     *wz_set = rotate_speed;
   }
-  // if (rotate_flag == 2)
-  // {
-  //   *wz_set = -rotate_speed;
-  // }
 }
 
 static void chassis_open_set_control(fp32 *vx_set, fp32 *vy_set, fp32 *wz_set, chassis_move_t *chassis_move_rc_to_vector)

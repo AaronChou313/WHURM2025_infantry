@@ -39,6 +39,17 @@
 // 微动开关IO
 #define BUTTEN_TRIG_PIN HAL_GPIO_ReadPin(BUTTON_TRIG_GPIO_Port, BUTTON_TRIG_Pin)
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+// 射击数据
+shoot_control_t shoot_control;
+uint8_t fric_flag = 0;
+extern ext_bullet_remaining_t bullet_remaining_t; // 剩余弹药量
+extern ext_game_robot_state_t robot_state;        // 机器人状态
+extern uint32_t uwTick;
+uint32_t repowerTick=0;	// 发射机构重新上电计时
+uint8_t last_mains_power_shooter_output = 0;
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -68,17 +79,6 @@ static void trigger_motor_turn_back(void);
  * @retval none
  */
 static void shoot_bullet_control(void);
-
-/*-----------------------------------变量声明-----------------------------------*/
-
-// 射击数据
-shoot_control_t shoot_control;
-uint8_t fric_flag = 0;
-extern ext_bullet_remaining_t bullet_remaining_t; // 剩余弹药量
-extern ext_game_robot_state_t robot_state;        // 机器人状态
-extern uint32_t uwTick;
-uint32_t repowerTick=0;	// 发射机构重新上电计时
-uint8_t last_mains_power_shooter_output = 0;
 
 /*-----------------------------------函数实现-----------------------------------*/
 
@@ -303,20 +303,20 @@ static void shoot_set_mode(void)
 	// 		shoot_control.shoot_mode = SHOOT_STOP;
     // }
 		
-		if(!robot_state.mains_power_shooter_output)
-		{
-			shoot_control.shoot_mode = SHOOT_STOP;
-    }
-		
-		if(last_mains_power_shooter_output==0&&robot_state.mains_power_shooter_output==1)
-		{
-			repowerTick = uwTick;
-		}
-		if(uwTick-repowerTick<5000)
-		{
-			shoot_control.shoot_mode = SHOOT_STOP;
-		}
-		last_mains_power_shooter_output = robot_state.mains_power_shooter_output;
+//		if(!robot_state.mains_power_shooter_output)
+//		{
+//			shoot_control.shoot_mode = SHOOT_STOP;
+//    }
+//		
+//		if(last_mains_power_shooter_output==0&&robot_state.mains_power_shooter_output==1)
+//		{
+//			repowerTick = uwTick;
+//		}
+//		if(uwTick-repowerTick<5000)
+//		{
+//			shoot_control.shoot_mode = SHOOT_STOP;
+//		}
+//		last_mains_power_shooter_output = robot_state.mains_power_shooter_output;
 }
 
 static void shoot_feedback_update(void)

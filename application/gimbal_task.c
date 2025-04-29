@@ -58,6 +58,37 @@ uint32_t gimbal_high_water;
 static void J_scope_gimbal_test(void);
 #endif
 
+/*-----------------------------------变量声明-----------------------------------*/
+
+// 云台控制数据
+gimbal_control_t gimbal_control;
+gimbal_control_t gimbal_control_1;
+
+// 测试用变量
+fp32 yaw_add;         // 每一次循环中遥控器对yaw电机编码角度的改变量
+fp32 pitch_add;       // 每一次循环中遥控器对pitch电机编码角度的改变量
+char g_behaviour;     // 云台行为模式
+uint8_t KEY_1;        // 按键值，按下为0
+uint8_t KEY_count;    // 按键计数
+uint8_t KEY_flag = 1; // 按键标志位
+// yaw电机编码器角度最值设置
+fp32 max_relative_angle_yaw = 1.0f;
+fp32 min_relative_angle_yaw = -2.0f;
+// pitch电机编码器角度最值设置
+fp32 max_relative_angle_pitch = -2.2f;
+fp32 min_relative_angle_pitch = -3.1f;
+// 发送的电机电流
+static int16_t yaw_can_set_current = 0, pitch_can_set_current = 0, shoot_can_set_current = 0;
+uint8_t ReadData;
+uint8_t keytrg;
+uint8_t keycon;
+uint32_t keyTick;
+extern uint32_t uwTick;
+// 接收到上位机数据
+extern InputData inputdata;
+
+uint8_t is_rc_reinit = 0;
+
 /*-----------------------------------内部函数声明-----------------------------------*/
 
 /**
@@ -207,37 +238,6 @@ static fp32 gimbal_PID_calc(gimbal_PID_t *pid, fp32 get, fp32 set, fp32 error_de
  * @retval none
  */
 static void calc_gimbal_cali(const gimbal_step_cali_t *gimbal_cali, uint16_t *yaw_offset, uint16_t *pitch_offset, fp32 *max_yaw, fp32 *min_yaw, fp32 *max_pitch, fp32 *min_pitch);
-
-/*-----------------------------------变量声明-----------------------------------*/
-
-// 云台控制数据
-gimbal_control_t gimbal_control;
-gimbal_control_t gimbal_control_1;
-
-// 测试用变量
-fp32 yaw_add;         // 每一次循环中遥控器对yaw电机编码角度的改变量
-fp32 pitch_add;       // 每一次循环中遥控器对pitch电机编码角度的改变量
-char g_behaviour;     // 云台行为模式
-uint8_t KEY_1;        // 按键值，按下为0
-uint8_t KEY_count;    // 按键计数
-uint8_t KEY_flag = 1; // 按键标志位
-// yaw电机编码器角度最值设置
-fp32 max_relative_angle_yaw = 1.0f;
-fp32 min_relative_angle_yaw = -2.0f;
-// pitch电机编码器角度最值设置
-fp32 max_relative_angle_pitch = -2.2f;
-fp32 min_relative_angle_pitch = -3.1f;
-// 发送的电机电流
-static int16_t yaw_can_set_current = 0, pitch_can_set_current = 0, shoot_can_set_current = 0;
-uint8_t ReadData;
-uint8_t keytrg;
-uint8_t keycon;
-uint32_t keyTick;
-extern uint32_t uwTick;
-// 接收到上位机数据
-extern InputData inputdata;
-
-uint8_t is_rc_reinit = 0;
 
 /*-----------------------------------函数实现-----------------------------------*/
 

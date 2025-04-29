@@ -42,33 +42,6 @@
       {0.0f, 1.0f, 0.0f},                 \
       {0.0f, 0.0f, 1.0f}
 
-/*-----------------------------------内部函数声明-----------------------------------*/
-
-/**
- * @brief 旋转陀螺仪、加速度计、磁力计，并计算零漂，因为设备有不同安装方式
- * @param[out] gyro 加上零漂和旋转
- * @param[out] accel 加上零漂和旋转
- * @param[out] mag 加上零漂和旋转
- * @param[in] bmi088 陀螺仪和加速度计数据
- * @param[in] ist8310 磁力计数据
- * @retval none
- */
-static void imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real_data_t *bmi088, ist8310_real_data_t *ist8310);
-
-/**
- * @brief 控制bmi088的温度
- * @param[in] temp bmi088的温度
- * @retval none
- */
-static void imu_temp_control(fp32 temp);
-
-/**
- * @brief 根据imu_update_flag的值，开启SPI DMA
- * @param[in] none
- * @retval none
- */
-static void imu_cmd_spi_dma(void);
-
 /*-----------------------------------变量声明-----------------------------------*/
 
 extern SPI_HandleTypeDef hspi1;
@@ -128,6 +101,33 @@ fp32 INS_angle[3] = {0.0f, 0.0f, 0.0f};
 float cali_scale[3]={1.0f,1.0f,1.0f};
 
 int it=0;
+
+/*-----------------------------------内部函数声明-----------------------------------*/
+
+/**
+ * @brief 旋转陀螺仪、加速度计、磁力计，并计算零漂，因为设备有不同安装方式
+ * @param[out] gyro 加上零漂和旋转
+ * @param[out] accel 加上零漂和旋转
+ * @param[out] mag 加上零漂和旋转
+ * @param[in] bmi088 陀螺仪和加速度计数据
+ * @param[in] ist8310 磁力计数据
+ * @retval none
+ */
+static void imu_cali_slove(fp32 gyro[3], fp32 accel[3], fp32 mag[3], bmi088_real_data_t *bmi088, ist8310_real_data_t *ist8310);
+
+/**
+ * @brief 控制bmi088的温度
+ * @param[in] temp bmi088的温度
+ * @retval none
+ */
+static void imu_temp_control(fp32 temp);
+
+/**
+ * @brief 根据imu_update_flag的值，开启SPI DMA
+ * @param[in] none
+ * @retval none
+ */
+static void imu_cmd_spi_dma(void);
 
 /*-----------------------------------函数实现-----------------------------------*/
 

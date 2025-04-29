@@ -35,15 +35,15 @@
 
 #define SERVO_MINUS_PWM_KEY KEY_PRESSED_OFFSET_SHIFT
 
-/*-----------------------------------内部函数声明-----------------------------------*/
-
-// 空
-
 /*-----------------------------------变量声明-----------------------------------*/
 
 const RC_ctrl_t *servo_rc;
 const static uint16_t servo_key[4] = {SERVO1_ADD_PWM_KEY, SERVO2_ADD_PWM_KEY, SERVO3_ADD_PWM_KEY, SERVO4_ADD_PWM_KEY};
 uint16_t servo_pwm[4] = {SERVO_MIN_PWM, SERVO_MIN_PWM, SERVO_MIN_PWM, SERVO_MIN_PWM};
+
+/*-----------------------------------内部函数声明-----------------------------------*/
+
+// 空
 
 /*-----------------------------------函数实现-----------------------------------*/
 

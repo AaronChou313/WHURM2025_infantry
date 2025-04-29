@@ -21,20 +21,20 @@ Target DLL:      CMSIS_AGDI.dll V1.27.5.0
 Dialog DLL:      TCM.DLL V1.27.0.0
  
 <h2>Project:</h2>
-C:\WHU_GC\RM\µç¿Ø-ElectronicControl\luojiafox_infantry\MDK-ARM\standard_robot.uvprojx
+C:\WHU_GC\RM\µç¿Ø-ElectronicControl\WHURM2025_infantry\MDK-ARM\standard_robot.uvprojx
 Project File Date:  03/03/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\software\Keil_v5\ARM\ARMCC\Bin'
 Build target 'standard_robot'
-compiling chassis_behaviour.c...
-..\application\chassis_behaviour.c(311): warning:  #1035-D: single-precision operand implicitly converted to double-precision
-    *angle_set = swing_angle * 0.1;
-..\application\chassis_behaviour.c(495): warning:  #1-D: last line of file ends without a newline
-  }
-..\application\chassis_behaviour.c: 2 warnings, 0 errors
+compiling main.c...
+..\my_UI\ui_types.h(8): warning:  #14-D: extra text after expected end of preprocessing directive
+  #ifdef __CC_ARM || __GNUC__
+../Src/main.c(176): warning:  #177-D: variable "tail"  was declared but never referenced
+        FrameTailer *tail = (FrameTailer *)(buffer + sizeof(FrameHeader) + sizeof(InputData));
+../Src/main.c: 2 warnings, 0 errors
 linking...
-Program Size: Code=113996 RO-data=14528 RW-data=1556 ZI-data=59820  
+Program Size: Code=113180 RO-data=14528 RW-data=1536 ZI-data=59728  
 FromELF: creating hex file...
 "standard_tpye_c\standard_tpye_c.axf" - 0 Error(s), 2 Warning(s).
 
@@ -54,7 +54,7 @@ Package Vendor: ARM
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.0.1
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:11
 </pre>
 </body>
 </html>
